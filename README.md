@@ -1,8 +1,6 @@
-# scany
+# pgx-scany
 
-## TODO
-
-remove the native sql interface
+stripped down scany for pgx.
 
 ## Overview
 
@@ -14,10 +12,7 @@ scany aims to solve this problem,
 it allows developers to scan complex data from a database into Go structs and other composite types 
 with just one function call and don't bother with rows iteration.
 
-scany isn't limited to any specific database. It integrates with `database/sql`, 
-so any database with `database/sql` driver is supported. 
-It also works with [pgx](https://github.com/jackc/pgx) library native interface. 
-Apart from the out of the box support, scany can be easily extended to work with almost any database library.
+This fork of scany only supports [pgx](https://github.com/jackc/pgx) and minimalizes
 
 Note that, scany isn't an ORM. First of all, it works only in one direction: 
 it scans data into Go objects from the database, but it can't build database queries based on those objects.
@@ -34,41 +29,8 @@ Secondly, it doesn't know anything about relations between objects e.g: one to m
 ## Install
 
 ```
-go get github.com/georgysavva/scany
+go get github.com/anton7r/pgx-scany
 ```
-
-## How to use with `database/sql`
-
-```go
-package main
-
-import (
-	"context"
-	"database/sql"
-
-	"github.com/georgysavva/scany/sqlscan"
-)
-
-type User struct {
-	ID    string
-	Name  string
-	Email string
-	Age   int
-}
-
-func main() {
-	ctx := context.Background()
-	db, _ := sql.Open("postgres", "example-connection-url")
-
-	var users []*User
-	sqlscan.Select(ctx, db, &users, `SELECT id, name, email, age FROM users`)
-	// users variable now contains data from all rows.
-}
-```
-
-Use [`sqlscan`](https://pkg.go.dev/github.com/georgysavva/scany/sqlscan) 
-package to work with `database/sql` standard library. 
-
 
 ## How to use with `pgx` native interface
 
@@ -118,7 +80,7 @@ Both `sqlscan` and `pgxscan` use `dbscan` internally.
 
 ## Supported Go versions 
 
-scany supports Go 1.13 and higher.
+pgx-scany supports Go 1.15 and higher. Lower versions could be supported but not guranteed.
 
 ## Roadmap   
 
