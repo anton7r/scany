@@ -1,4 +1,4 @@
-module github.com/anton7r/scany
+module github.com/anton7r/pgx-scany
 
 go 1.15
 
