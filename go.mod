@@ -3,11 +3,16 @@ module github.com/anton7r/pgx-scany
 go 1.15
 
 require (
-	github.com/gofrs/uuid v4.0.0+incompatible // indirect; inirect
-	github.com/jackc/pgproto3/v2 v2.0.7 // indirect; indiect
+	github.com/gofrs/uuid v4.0.0+incompatible // indirect
+	github.com/jackc/pgproto3/v2 v2.0.7 // indirect
 	github.com/jackc/pgx/v4 v4.11.0
 	github.com/kr/text v0.2.0 // indirect
 	github.com/lib/pq v1.10.1 // indirect
+	github.com/cockroachdb/cockroach-go/v2 v2.0.3
+	github.com/jackc/pgconn v1.7.0 // indirect
+	github.com/jackc/pgtype v1.4.2
+	github.com/jackc/pgx/v4 v4.8.1
+	github.com/jackc/puddle v1.1.2 // indirect
 	github.com/pkg/errors v0.9.1
 	github.com/shopspring/decimal v1.2.0 // indirect
 	github.com/stretchr/testify v1.7.0 // indirect

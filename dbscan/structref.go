@@ -31,12 +31,17 @@ func getColumnToFieldIndexMap(structType reflect.Type) map[string][]int {
 			}
 
 			dbTag, dbTagPresent := field.Tag.Lookup(dbStructTagKey)
-
+			if dbTagPresent {
+				dbTag = strings.Split(dbTag, ",")[0]
+			}
 			if dbTag == "-" {
 				// Field is ignored, skip it.
 				continue
 			}
-			index := append(traversal.IndexPrefix, field.Index...)
+
+			index := make([]int, 0, len(traversal.IndexPrefix)+len(field.Index))
+			index = append(index, traversal.IndexPrefix...)
+			index = append(index, field.Index...)
 
 			columnPart := dbTag
 			if !dbTagPresent {
