@@ -1,4 +1,4 @@
-# scany
+# pgx-scany
 
 [![Tests Status](https://github.com/georgysavva/scany/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/georgysavva/scany/actions/workflows/test.yml)
 [![Go Report Card](https://goreportcard.com/badge/github.com/georgysavva/scany)](https://goreportcard.com/report/github.com/georgysavva/scany)
@@ -15,9 +15,7 @@ be error-prone verbose and just tedious. scany aims to solve this problem. It al
 from a database into Go structs and other composite types with just one function call and don't bother with rows
 iteration.
 
-scany isn't limited to any specific database. It integrates with `database/sql`, so any database with `database/sql`
-driver is supported. It also works with [`pgx`](https://github.com/jackc/pgx) library native interface. Apart from the
-out-of-the-box support, scany can be easily extended to work with almost any database library.
+This fork of scany only works with [`pgx`](https://github.com/jackc/pgx) library native interface.
 
 Note that scany isn't an ORM. First of all, it works only in one direction:
 it scans data into Go objects from the database, but it can't build database queries based on those objects. Secondly,
@@ -26,14 +24,14 @@ it doesn't know anything about relations between objects e.g: one to many, many 
 ## Features
 
 * Custom database column name via struct tag
-* Reusing structs via nesting or embedding 
+* Reusing structs via nesting or embedding
 * NULLs and custom types support
 * Omitted struct fields
 * Apart from structs, support for maps and Go primitive types as the destination.
 
 ## Install
 
-```
+```bash
 go get github.com/georgysavva/scany
 ```
 
@@ -43,32 +41,31 @@ go get github.com/georgysavva/scany
 package main
 
 import (
-	"context"
-	"database/sql"
+    "context"
+    "database/sql"
 
-	"github.com/georgysavva/scany/sqlscan"
+    "github.com/georgysavva/scany/sqlscan"
 )
 
 type User struct {
-	ID    string
-	Name  string
-	Email string
-	Age   int
+    ID    string
+    Name  string
+    Email string
+    Age   int
 }
 
 func main() {
-	ctx := context.Background()
-	db, _ := sql.Open("postgres", "example-connection-url")
+    ctx := context.Background()
+    db, _ := sql.Open("postgres", "example-connection-url")
 
-	var users []*User
-	sqlscan.Select(ctx, db, &users, `SELECT id, name, email, age FROM users`)
-	// users variable now contains data from all rows.
+    var users []*User
+    sqlscan.Select(ctx, db, &users, `SELECT id, name, email, age FROM users`)
+    // users variable now contains data from all rows.
 }
 ```
 
-Use [`sqlscan`](https://pkg.go.dev/github.com/georgysavva/scany/sqlscan) 
-package to work with `database/sql` standard library. 
-
+Use [`sqlscan`](https://pkg.go.dev/github.com/georgysavva/scany/sqlscan)
+package to work with `database/sql` standard library.
 
 ## How to use with `pgx` native interface
 
@@ -76,36 +73,36 @@ package to work with `database/sql` standard library.
 package main
 
 import (
-	"context"
+    "context"
 
-	"github.com/jackc/pgx/v4/pgxpool"
+    "github.com/jackc/pgx/v4/pgxpool"
 
-	"github.com/georgysavva/scany/pgxscan"
+    "github.com/georgysavva/scany/pgxscan"
 )
 
 type User struct {
-	ID    string
-	Name  string
-	Email string
-	Age   int
+    ID    string
+    Name  string
+    Email string
+    Age   int
 }
 
 func main() {
-	ctx := context.Background()
-	db, _ := pgxpool.Connect(ctx, "example-connection-url")
+    ctx := context.Background()
+    db, _ := pgxpool.Connect(ctx, "example-connection-url")
 
-	var users []*User
-	pgxscan.Select(ctx, db, &users, `SELECT id, name, email, age FROM users`)
-	// users variable now contains data from all rows.
+    var users []*User
+    pgxscan.Select(ctx, db, &users, `SELECT id, name, email, age FROM users`)
+    // users variable now contains data from all rows.
 }
 ```
 
-Use [`pgxscan`](https://pkg.go.dev/github.com/georgysavva/scany/pgxscan) 
-package to work with `pgx` library native interface. 
+Use [`pgxscan`](https://pkg.go.dev/github.com/georgysavva/scany/pgxscan)
+package to work with `pgx` library native interface.
 
 ## How to use with other database libraries
 
-Use [`dbscan`](https://pkg.go.dev/github.com/georgysavva/scany/dbscan) package that works with an abstract database, 
+Use [`dbscan`](https://pkg.go.dev/github.com/georgysavva/scany/dbscan) package that works with an abstract database,
 and can be integrated with any library that has a concept of rows. This particular package implements core scany
 features and contains all the logic. Both `sqlscan` and `pgxscan` use `dbscan` internally.
 
