@@ -88,7 +88,7 @@ linters-settings:
   godot:
     check-all: true
   goimports:
-    local-prefixes: github.com/georgysavva/scany
+    local-prefixes: github.com/anton7r/scany
   golint:
     min-confidence: 0
   gomnd:

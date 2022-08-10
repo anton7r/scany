@@ -4,13 +4,13 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/jackc/pgtype"
 	"github.com/jackc/pgconn"
+	"github.com/jackc/pgtype"
 	"github.com/jackc/pgx/v4"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"github.com/pkg/errors"
 
-	"github.com/georgysavva/scany/dbscan"
+	"github.com/anton7r/scany/dbscan"
 )
 
 // Querier is something that pgxscan can query and get the pgx.Rows from.

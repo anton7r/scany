@@ -1,4 +1,4 @@
-module github.com/georgysavva/scany
+module github.com/anton7r/scany
 
 go 1.14
 
